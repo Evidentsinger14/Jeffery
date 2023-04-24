@@ -3,6 +3,7 @@ package dev.ev1dent.jeffery;
 import dev.ev1dent.jeffery.events.InteractionEventListener;
 import dev.ev1dent.jeffery.events.MessageEventListener;
 import dev.ev1dent.jeffery.events.ReadyEventListener;
+import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -11,7 +12,10 @@ import javax.security.auth.login.LoginException;
 
 public class JefferyBrains {
     public static void main(String[] args) throws LoginException {
-        final String BOT_TOKEN = "DONT-PUSH-TOKEN";
+        final Dotenv config;
+        config = Dotenv.configure().load();
+        
+        final String BOT_TOKEN = config.get("BOT_TOKEN");
         JDABuilder jdaBuilder = JDABuilder.createDefault(BOT_TOKEN);
 
         JDA jda = jdaBuilder
