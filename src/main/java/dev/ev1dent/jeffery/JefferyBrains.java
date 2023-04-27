@@ -8,10 +8,8 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
-import javax.security.auth.login.LoginException;
-
 public class JefferyBrains {
-    public static void main(String[] args) throws LoginException {
+    public static void main(String[] args) {
         final Dotenv config;
         config = Dotenv.configure().load();
         
@@ -48,9 +46,7 @@ public class JefferyBrains {
         jda.updateCommands().queue();
         jda.upsertCommand("panel", "this is a slash command").setGuildOnly(true).queue();
         jda.upsertCommand("ping", "this is a slash command").setGuildOnly(true).queue();
-        jda.upsertCommand("ban", "this is a slash command").setGuildOnly(true).queue();
-        jda.upsertCommand("kick", "this is a slash command").setGuildOnly(true).queue();
-        jda.upsertCommand("mute", "this is a slash command").setGuildOnly(true).queue();
+
 
 
     }
