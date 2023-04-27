@@ -25,12 +25,18 @@ public class InteractionEventListener extends ListenerAdapter {
                         .setTitle("Role Reactions", null)
                         .setColor(Color.RED)
                         .setDescription("List of all games there are Text Channels for. You can select games you're interested in here - This will unlock a category + Channel for you to access, and chat with others in. For other games to be added, please post them in <#795787619782623293> ")
-                        .addField("Games", "Grand Theft Auto V, American Truck Simulator, DayZ", false);
+                        .addField("Games", "Grand Theft Auto V, American Truck Simulator, DayZ, Overwatch", false);
 
                 /* CODE TO ACTUALLY EXECUTE */
                 event.reply("Sending panel").setEphemeral(true).queue();
 
-                event.getChannel().sendMessageEmbeds(panelEmbed.build()).addActionRow(Button.success("ALL", "ALL"), Button.success("ATS", "ATS"), Button.success("GTA", "GTA V"), Button.success("DayZ", "DayZ")).queue();
+                event.getChannel().sendMessageEmbeds(panelEmbed.build())
+                        .addActionRow(
+                                Button.success("ALL", "ALL"),
+                                Button.success("ATS", "ATS"),
+                                Button.success("GTA", "GTA V"),
+                                Button.success("DayZ", "DayZ"),
+                                Button.success("Overwatch", "Overwatch")).queue();
             }
 
             case "mute" -> event.getChannel().sendMessage("Mute Command").queue();
@@ -50,6 +56,7 @@ public class InteractionEventListener extends ListenerAdapter {
         gameList.add("ATS");
         gameList.add("GTA");
         gameList.add("DayZ");
+        gameList.add("Overwatch");
 
 
         if (gameList.contains(ID)) {
