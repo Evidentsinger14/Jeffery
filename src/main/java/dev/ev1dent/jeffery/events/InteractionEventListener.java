@@ -24,7 +24,7 @@ public class InteractionEventListener extends ListenerAdapter {
                 EmbedBuilder panelEmbed = new EmbedBuilder()
                         .setTitle("Role Reactions", null)
                         .setColor(Color.RED)
-                        .setDescription("List of all games there are Text Channels for.")
+                        .setDescription("List of all games there are Text Channels for. You can select games you're interested in here - This will unlock a category + Channel for you to access, and chat with others in. For other games to be added, please post them in <#795787619782623293> ")
                         .addField("Games", "Grand Theft Auto V, American Truck Simulator, DayZ", false);
 
                 /* CODE TO ACTUALLY EXECUTE */
