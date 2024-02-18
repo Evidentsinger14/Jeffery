@@ -1,19 +1,22 @@
 package dev.ev1dent.jeffery;
 
-import dev.ev1dent.jeffery.events.InteractionEventListener;
+import dev.ev1dent.jeffery.panels.PanelATSModlist;
+import dev.ev1dent.jeffery.panels.PanelReactionRoles;
 import dev.ev1dent.jeffery.events.MessageEventListener;
 import dev.ev1dent.jeffery.events.ReadyEventListener;
+import dev.ev1dent.jeffery.panels.PanelSunkenland;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class JefferyBrains {
+    public static Dotenv config() {
+        return Dotenv.configure().load();
+    }
+
     public static void main(String[] args) {
-        final Dotenv config;
-        config = Dotenv.configure().load();
-        
-        final String BOT_TOKEN = config.get("BOT_TOKEN");
+        String BOT_TOKEN = JefferyBrains.config().get("BOT_TOKEN");
         JDABuilder jdaBuilder = JDABuilder.createDefault(BOT_TOKEN);
 
         JDA jda = jdaBuilder
@@ -37,15 +40,19 @@ public class JefferyBrains {
                 .addEventListeners(
                         new ReadyEventListener(),
                         new MessageEventListener(),
-                        new InteractionEventListener()
+                        new PanelReactionRoles(),
+                        new PanelSunkenland(),
+                        new PanelATSModlist()
                 )
                 // Build code into a bot.
                 .build();
 
         // Create your slash commands to be used.
         jda.updateCommands().queue();
-        jda.upsertCommand("panel", "this is a slash command").setGuildOnly(true).queue();
-        jda.upsertCommand("ping", "this is a slash command").setGuildOnly(true).queue();
+        jda.upsertCommand("reactionroles", "This is the panel for the reaction roles").setGuildOnly(true).queue();
+        jda.upsertCommand("skpanel", "This is the panel for the Sunkenland Server Manager").setGuildOnly(true).queue();
+        jda.upsertCommand("atsmods", "This is the panel for American Truck Simulator mods, and their order!").setGuildOnly(true).queue();
+
 
 
 
