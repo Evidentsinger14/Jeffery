@@ -72,6 +72,7 @@ public class PanelSunkenland extends ListenerAdapter {
     }
 
     private void stopServer(ButtonInteractionEvent event, User user){
+        String input = "";
         event.reply("Stopping Server...").setEphemeral(true).queue();
         PteroUtil.postToPanel("{\"signal\": \"stop\"}", ServerID, APIKey);
         TextChannel logChannel = event.getGuild().getTextChannelById(455843507618316308L);
