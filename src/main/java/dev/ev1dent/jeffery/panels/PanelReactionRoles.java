@@ -22,8 +22,7 @@ public class PanelReactionRoles extends ListenerAdapter {
             EmbedBuilder panelEmbed = new EmbedBuilder()
                     .setTitle("Role Reactions", null)
                     .setColor(Color.RED)
-                    .setDescription("List of all games there are Text Channels for. You can select games you're interested in here - This will unlock a category + Channel for you to access, and chat with others in. For other games to be added, please post them in <#795787619782623293> ")
-                    .addField("Games", "Grand Theft Auto V, American Truck Simulator, DayZ, Overwatch", false);
+                    .setDescription("List of all games there are Text Channels for. You can select games you're interested in here - This will unlock a category + Channel for you to access, and chat with others in. For other games to be added, please post them in <#795787619782623293> ");
 
             /* CODE TO ACTUALLY EXECUTE */
             event.reply("Sending panel").setEphemeral(true).queue();
@@ -35,7 +34,11 @@ public class PanelReactionRoles extends ListenerAdapter {
                             Button.success("GTA", "GTA V"),
                             Button.success("DayZ", "DayZ"),
                             Button.success("Overwatch", "Overwatch")
-                    ).queue();
+                    )
+                    .addActionRow(
+                            Button.success("Sunkenland", "Sunkenland")
+                    )
+                    .queue();
         }
     }
 
@@ -50,30 +53,34 @@ public class PanelReactionRoles extends ListenerAdapter {
         gameList.add("GTA");
         gameList.add("DayZ");
         gameList.add("Overwatch");
-
+        gameList.add("Sunkenland");
 
         if (gameList.contains(ID)) {
             Role role = Objects.requireNonNull(event.getGuild()).getRolesByName(ID, true).get(0);
+            System.out.printf("Role Added: %s", role.toString());
 
             try {
                 assert member != null;
                 boolean hasRole = member.getRoles().contains(role);
-                if(hasRole){
-                    event.getGuild().addRoleToMember(event.getInteraction().getUser(), role).queue();
-                    event.reply("+ " + ID).setEphemeral(true).queue();
-                } else {
-                    event.getGuild().removeRoleFromMember(event.getInteraction().getUser(), role).queue();
-                    event.reply("- " + ID).setEphemeral(true).queue();
+                switch (String.valueOf(hasRole)){
+                    case "true":
+                        event.getGuild().removeRoleFromMember(event.getInteraction().getUser(), role).queue();
+                        event.reply(String.format("Removed %s", ID)).setEphemeral(true).queue();
+                        break;
+                    case "false":
+                        event.getGuild().addRoleToMember(event.getInteraction().getUser(), role).queue();
+                        event.reply(String.format("Added %s", ID)).setEphemeral(true).queue();
+                        break;
                 }
-            } catch (Exception exception) {
+            } catch (Exception e) {
                 EmbedBuilder errorEmbed = new EmbedBuilder()
                         .setTitle("Error Embed", null)
                         .setColor(Color.RED)
-                        .addField("Exception", exception.toString(), false);
+                        .addField("Exception", e.toString(), false);
                 event.getGuild().getTextChannelsByName("bot-logs", true).get(0).sendMessageEmbeds(errorEmbed.build()).queue();
 
                 event.reply("Could not add role " + ID + ". Please contact <@412070526081695744>.").setEphemeral(true).queue();
-                System.out.println(exception);
+                System.out.println(e);
             }
 
         }

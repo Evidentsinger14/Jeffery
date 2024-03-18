@@ -1,5 +1,7 @@
 package dev.ev1dent.jeffery;
 
+import dev.ev1dent.jeffery.events.GuildMemberJoinListener;
+import dev.ev1dent.jeffery.events.GuildMemberRoleProcessor;
 import dev.ev1dent.jeffery.panels.PanelATSModlist;
 import dev.ev1dent.jeffery.panels.PanelReactionRoles;
 import dev.ev1dent.jeffery.events.MessageEventListener;
@@ -42,7 +44,9 @@ public class JefferyBrains {
                         new MessageEventListener(),
                         new PanelReactionRoles(),
                         new PanelSunkenland(),
-                        new PanelATSModlist()
+                        new PanelATSModlist(),
+                        new GuildMemberJoinListener(),
+                        new GuildMemberRoleProcessor()
                 )
                 // Build code into a bot.
                 .build();
