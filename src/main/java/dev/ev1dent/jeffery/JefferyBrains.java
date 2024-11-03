@@ -1,5 +1,6 @@
 package dev.ev1dent.jeffery;
 
+import dev.ev1dent.jeffery.Commands.CommandServers;
 import dev.ev1dent.jeffery.events.GuildMemberJoinListener;
 import dev.ev1dent.jeffery.events.GuildMemberRoleProcessor;
 import dev.ev1dent.jeffery.panels.PanelATSModlist;
@@ -10,6 +11,7 @@ import dev.ev1dent.jeffery.panels.PanelSunkenland;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class JefferyBrains {
@@ -46,16 +48,34 @@ public class JefferyBrains {
                         new PanelSunkenland(),
                         new PanelATSModlist(),
                         new GuildMemberJoinListener(),
-                        new GuildMemberRoleProcessor()
+                        new GuildMemberRoleProcessor(),
+                        new CommandServers()
                 )
                 // Build code into a bot.
                 .build();
 
         // Create your slash commands to be used.
         jda.updateCommands().queue();
-        jda.upsertCommand("reactionroles", "This is the panel for the reaction roles").setGuildOnly(true).queue();
-        jda.upsertCommand("skpanel", "This is the panel for the Sunkenland Server Manager").setGuildOnly(true).queue();
-        jda.upsertCommand("atsmods", "This is the panel for American Truck Simulator mods, and their order!").setGuildOnly(true).queue();
+        jda.upsertCommand("reactionroles", "This is the panel for the reaction roles")
+                .setGuildOnly(true).queue();
+
+        jda.upsertCommand("skpanel", "This is the panel for the Sunkenland Server Manager")
+                .setGuildOnly(true).queue();
+
+        jda.upsertCommand("atsmods", "This is the panel for American Truck Simulator mods, and their order!")
+                .setGuildOnly(true).queue();
+
+        jda.upsertCommand("addserver", "Add servers to config (Admin)")
+                .addOption(OptionType.STRING, "servername", "The name the server will be referred to as within the bot.")
+                .addOption(OptionType.STRING, "pteroid", "The short ID for pterodactyl")
+                .addOption(OptionType.ROLE, "role", "What role should be able to start/stop this server")
+                .setGuildOnly(true).queue();
+        jda.upsertCommand("rmserver", "Remove servers from config (Admin)")
+                .addOption(OptionType.STRING, "servername", "The name the server will be referred to as within the bot.")
+                .setGuildOnly(true).queue();
+        jda.upsertCommand("listservers", "List all servers currently in the server configuration file.")
+                .setGuildOnly(true).queue();
+
 
 
 
