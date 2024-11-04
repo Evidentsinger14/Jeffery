@@ -59,13 +59,12 @@ public class PanelSunkenland extends ListenerAdapter {
 
     }
 
-    String APIKey = JefferyBrains.config().get("SUNKENLAND_APIKEY"),
-            ServerID = JefferyBrains.config().get("SUNKENLAND_SERVERID");
+    String ServerID = JefferyBrains.config().get("SUNKENLAND_SERVERID");
 
 
     private void startServer(ButtonInteractionEvent event, User user){
         event.reply("Starting Server...").setEphemeral(true).queue();
-        PteroUtil.postToPanel("{\"signal\": \"start\"}", ServerID, APIKey);
+        PteroUtil.postToPanel("start", ServerID);
         TextChannel logChannel = event.getGuild().getTextChannelById(455843507618316308L);
         logChannel.sendMessage(user.getName() + " Started the server").queue();
 
@@ -73,7 +72,7 @@ public class PanelSunkenland extends ListenerAdapter {
 
     private void stopServer(ButtonInteractionEvent event, User user){
         event.reply("Stopping Server...").setEphemeral(true).queue();
-        PteroUtil.postToPanel("{\"signal\": \"stop\"}", ServerID, APIKey);
+        PteroUtil.postToPanel("stop", ServerID);
         TextChannel logChannel = event.getGuild().getTextChannelById(455843507618316308L);
         logChannel.sendMessage(user.getName() + " Stopped the server").queue();
     }

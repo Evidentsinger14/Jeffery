@@ -2,8 +2,11 @@ package dev.ev1dent.jeffery.utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+
 import java.io.*;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -13,22 +16,7 @@ public class ServerConfigManager {
     private final Gson gson;
     private Map<String, ServerConfig> configData;
 
-    public static class ServerConfig {
-        private final String serverId;
-        private final String roleId;
-
-        public ServerConfig(String serverId, String roleId) {
-            this.serverId = serverId;
-            this.roleId = roleId;
-        }
-
-        public String getServerId() {
-            return serverId;
-        }
-
-        public String getRoleId() {
-            return roleId;
-        }
+    public record ServerConfig(String serverId, String roleId) {
     }
 
     public ServerConfigManager() {
@@ -60,7 +48,6 @@ public class ServerConfigManager {
         }
     }
 
-    // Save the configuration to the JSON file
     private void saveConfig() {
         try {
             Writer writer = new FileWriter(configFile);
@@ -85,12 +72,12 @@ public class ServerConfigManager {
 
     public String getServerId(String serverName) {
         ServerConfig config = configData.get(serverName);
-        return config != null ? config.getServerId() : null;
+        return config != null ? config.serverId() : null;
     }
 
     public String getRoleId(String serverName) {
         ServerConfig config = configData.get(serverName);
-        return config != null ? config.getRoleId() : null;
+        return config != null ? config.roleId() : null;
     }
 
     public ServerConfig getServerConfig(String serverName) {
@@ -103,5 +90,13 @@ public class ServerConfigManager {
 
     public Set<String> getAllServerNames() {
         return configData.keySet();
+    }
+
+    public boolean isAuthorizedUser(SlashCommandInteractionEvent event){
+        ArrayList<String> authorizedUsers = new ArrayList<>();
+            authorizedUsers.add("412070526081695744"); // Me
+            authorizedUsers.add("464783803110391818"); // Ice
+            authorizedUsers.add("303886787313401856"); // Coby
+        return authorizedUsers.contains(event.getUser().getId());
     }
 }

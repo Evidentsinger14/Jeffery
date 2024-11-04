@@ -75,6 +75,12 @@ public class JefferyBrains {
                 .setGuildOnly(true).queue();
         jda.upsertCommand("listservers", "List all servers currently in the server configuration file.")
                 .setGuildOnly(true).queue();
+        jda.upsertCommand("startserver", "start the specified server")
+                .addOption(OptionType.STRING, "servername", "Specify the name of the server you wish to start")
+                .setGuildOnly(true).queue();
+        jda.upsertCommand("stopserver", "stops the specified server")
+                .addOption(OptionType.STRING, "servername", "Specify the name of the server you wish to stop")
+                .setGuildOnly(true).queue();
 
 
 
